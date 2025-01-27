@@ -20,4 +20,5 @@ jobs:
           debug: true
           script: |
               echo "Repository found. Fetching latest changes..."
+              cd /phoenix
               git pull origin main
