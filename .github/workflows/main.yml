@@ -17,6 +17,6 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            echo "Deploying to server..."
+            echo "Testing SSH connection..."
             cd /phoenix
             git pull
