@@ -20,5 +20,4 @@ jobs:
           debug: true
           script: |
               echo "Repository found. Fetching latest changes..."
-              git fetch origin
-              git reset --hard origin/main
+              git pull origin main
