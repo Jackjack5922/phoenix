@@ -19,6 +19,10 @@ jobs:
           port: 22
           debug: true
           script: |
-            echo "Testing SSH connection..."
+            echo "Deploying to server..."
+            if [ ! -d "/phoenix/.git" ]; then
+              echo "Repository not found. Cloning repository..."
+              git clone <repository-url> /phoenix
+            fi
             cd /phoenix
             git pull
