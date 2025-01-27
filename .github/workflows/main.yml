@@ -18,5 +18,6 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             echo "Testing SSH connection..."
+            ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@${{ secrets.EC2_HOST }} echo "Connected!"
             cd /phoenix
             git pull
