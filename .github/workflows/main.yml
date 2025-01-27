@@ -1,21 +1,22 @@
 name: main branch auto ci process script
 
-on: # 아래 job을 실행시킬 action
+on:
   push:
     branches: [ main ]
 
 jobs:
   deploy:
     name: deploy
-    runs-on: ubuntu-latest # 실행될 인스턴스 OS와 버전
+    runs-on: ubuntu-22.04
 
     steps:
-      - name: excuting remote ssh commands
-        uses: appleboy/ssh-action@v0.1.9 # ssh 접속하는 오픈소스
+      - name: Executing remote SSH commands
+        uses: appleboy/ssh-action@v0.1.8
         with:
-          host: ${{ secrets.EC2_HOST }} # ec2 인스턴스 ip
-          username: ${{ secrets.EC2_USER }} # ubuntu 아이디
-          key: ${{ secrets.EC2_SSH_KEY }} # ec2 인스턴스 pem key
-          script: | # 실행될 스크립트
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            echo "Deploying to server..."
             cd /phoenix
             git pull
