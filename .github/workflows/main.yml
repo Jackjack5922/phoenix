@@ -13,10 +13,9 @@ jobs:
       - name: excuting remote ssh commands
         uses: appleboy/ssh-action@v0.1.9 # ssh 접속하는 오픈소스
         with:
-          host: ${{ secrets.REMOTE_IP }} # ec2 인스턴스 ip
-          username: ${{ secrets.REMOTE_USER }} # ubuntu 아이디
-          key: ${{ secrets.REMOTE_PRIVATE_KEY }} # ec2 인스턴스 pem key
-          port: ${{ secrets.REMOTE_SSH_PORT }} # 접속포트번호 (보통 22)
+          host: ${{ secrets.EC2_HOST }} # ec2 인스턴스 ip
+          username: ${{ secrets.EC2_USER }} # ubuntu 아이디
+          key: ${{ secrets.EC2_SSH_KEY }} # ec2 인스턴스 pem key
           script: | # 실행될 스크립트
             cd /phoenix
             git pull
