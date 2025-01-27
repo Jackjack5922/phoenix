@@ -19,18 +19,6 @@ jobs:
           port: 22
           debug: true
           script: |
-            echo "Deploying to server..."
-            if [ ! -d "/phoenix" ]; then
-              echo "Directory /phoenix not found. Creating directory..."
-              sudo mkdir -p /phoenix
-              sudo chown -R $USER:$USER /phoenix
-            fi
-            cd /phoenix
-            if [ ! -d ".git" ]; then
-              echo "Repository not found. Cloning repository..."
-              git clone https://github.com/Jackjack5922/phoenix /phoenix
-            else
               echo "Repository found. Fetching latest changes..."
               git fetch origin
               git reset --hard origin/main
-            fi
