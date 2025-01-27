@@ -20,9 +20,13 @@ jobs:
           debug: true
           script: |
             echo "Deploying to server..."
+            if [ ! -d "/phoenix" ]; then
+              echo "Directory /phoenix not found. Creating directory..."
+              mkdir -p /phoenix
+            fi
             if [ ! -d "/phoenix/.git" ]; then
               echo "Repository not found. Cloning repository..."
-              git clone <repository-url> /phoenix
+              git clone ${{ secrets.REPOSITORY_URL }} /phoenix
             fi
             cd /phoenix
             git pull
