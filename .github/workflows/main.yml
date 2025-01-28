@@ -29,16 +29,14 @@ jobs:
         aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws configure set region ${{ secrets.AWS_REGION }}
 
-    # 4. ECR 리포지토리 확인/생성
-    - name: Create ECR repository if it doesn't exist
+    # 4. Amazon ECR 로그인
+    - name: Log in to Amazon ECR
       run: |
-        aws ecr describe-repositories --repository-names ${{ secrets.IMAGE_NAME }} --region ${{ secrets.AWS_REGION }} || \
-        aws ecr create-repository --repository-name ${{ secrets.IMAGE_NAME }} --region ${{ secrets.AWS_REGION }}
+        aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
 
     # 5. Docker 이미지 빌드 및 푸시
     - name: Build and push Docker image to Amazon ECR
       env:
-        AWS_REGION: ${{ secrets.AWS_REGION }}
         ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
         IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
       run: |
