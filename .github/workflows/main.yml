@@ -14,12 +14,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # 2. AWS CLI 설치
-    - name: Install AWS CLI
+    # 2. AWS CLI 업데이트
+    - name: Update AWS CLI
       run: |
         curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
         unzip awscliv2.zip
-        sudo ./aws/install
+        sudo ./aws/install --update
         aws --version
 
     # 3. AWS 자격 증명 설정
@@ -42,5 +42,5 @@ jobs:
         ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
         IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
       run: |
-        # docker build -t $ECR_REGISTRY/$IMAGE_NAME:latest .
-        # docker push $ECR_REGISTRY/$IMAGE_NAME:latest
+        docker build -t $ECR_REGISTRY/$IMAGE_NAME:latest .
+        docker push $ECR_REGISTRY/$IMAGE_NAME:latest
