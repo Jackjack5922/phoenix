@@ -40,5 +40,6 @@ jobs:
         ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
         IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
       run: |
-        docker build -t $ECR_REGISTRY/pheonix/$IMAGE_NAME:latest .
-        docker push $ECR_REGISTRY/pheonix/$IMAGE_NAME:latest
+        docker build -t $ECR_REGISTRY/phoenix/$IMAGE_NAME:latest .
+        docker push $ECR_REGISTRY/phoenix/$IMAGE_NAME:latest
+s
