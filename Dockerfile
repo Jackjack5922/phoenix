@@ -14,4 +14,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY ./Modeling /app
 
 # Define the default command
-CMD ["python", "main.py", "--host", "phoenix-mlops-db.cjywquoscxz3.ap-northeast-2.rds.amazonaws.com", "--database", "ethic_db", "--user", "admin", "--password", "moasis0104", "--table", "train"]
+CMD ["python", "main.py"\
+, "--host", "phoenix-mlops-db.cjywquoscxz3.ap-northeast-2.rds.amazonaws.com"\
+, "--database", "ethic_db"\
+, "--user", "admin"\
+, "--password", "moasis0104"\
+, "--table", "train"\
+, "--epochs", "1"]
