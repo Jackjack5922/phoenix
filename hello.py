@@ -1,4 +1,3 @@
-print("hello, world!")
-print("hello, world!")
+print("파이프라인 시작!")
 
 
