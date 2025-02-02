@@ -42,3 +42,14 @@ jobs:
       run: |
         docker build -t $ECR_REGISTRY/${{secrets.IMAGE_NAME}}:latest .
         docker push $ECR_REGISTRY/${{secrets.IMAGE_NAME}}:latest
+
+    - name: Trigger Airflow DAG
+      run: |
+        # SSH 키 파일 생성
+        echo "${{ secrets.EC2_SSH_KEY }}" > ec2_key.pem
+        chmod 600 ec2_key.pem
+        
+        ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USER }}@3.38.250.132 << 'EOF'
+          # Airflow DAG 실행
+          airflow dags trigger train_and_deploy
+        EOF
