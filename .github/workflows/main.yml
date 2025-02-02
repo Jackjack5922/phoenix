@@ -50,6 +50,6 @@ jobs:
         chmod 600 ec2_key.pem
         
         ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USER }}@3.38.250.132 << 'EOF'
-          # Airflow DAG 실행
+          source /home/ubuntu/airflow-venv/bin/activate
           airflow dags trigger train_and_deploy
         EOF
