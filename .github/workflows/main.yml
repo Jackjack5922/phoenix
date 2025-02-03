@@ -10,38 +10,38 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # 1. 코드 체크아웃
-    - name: Checkout code
-      uses: actions/checkout@v3
+    # # 1. 코드 체크아웃
+    # - name: Checkout code
+    #   uses: actions/checkout@v3
 
-    # 2. AWS CLI 업데이트
-    - name: Update AWS CLI
-      run: |
-        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-        unzip awscliv2.zip
-        sudo ./aws/install --update
-        aws --version
+    # # 2. AWS CLI 업데이트
+    # - name: Update AWS CLI
+    #   run: |
+    #     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    #     unzip awscliv2.zip
+    #     sudo ./aws/install --update
+    #     aws --version
 
-    # 3. AWS 자격 증명 설정
-    - name: Configure AWS CLI
-      run: |
-        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws configure set region ${{ secrets.AWS_REGION }}
+    # # 3. AWS 자격 증명 설정
+    # - name: Configure AWS CLI
+    #   run: |
+    #     aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     aws configure set region ${{ secrets.AWS_REGION }}
 
-    # 4. Amazon ECR 로그인
-    - name: Log in to Amazon ECR
-      run: |
-        aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
+    # # 4. Amazon ECR 로그인
+    # - name: Log in to Amazon ECR
+    #   run: |
+    #     aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
 
-    # 5. Docker 이미지 빌드 및 푸시
-    - name: Build and push Docker image to Amazon ECR
-      env:
-        ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-        IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
-      run: |
-        docker build -t $ECR_REGISTRY/${{secrets.IMAGE_NAME}}:latest .
-        docker push $ECR_REGISTRY/${{secrets.IMAGE_NAME}}:latest
+    # # 5. Docker 이미지 빌드 및 푸시
+    # - name: Build and push Docker image to Amazon ECR
+    #   env:
+    #     ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+    #     IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
+    #   run: |
+    #     docker build -t $ECR_REGISTRY/${{secrets.IMAGE_NAME}}:latest .
+    #     docker push $ECR_REGISTRY/${{secrets.IMAGE_NAME}}:latest
 
     - name: Trigger Airflow DAG
       run: |
@@ -49,7 +49,7 @@ jobs:
         echo "${{ secrets.EC2_SSH_KEY }}" > ec2_key.pem
         chmod 600 ec2_key.pem
         
-        ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USER }}@52.79.222.74 << 'EOF'
+        ssh -o StrictHostKeyChecking=no -i ec2_key.pem ubuntu@52.79.222.74 << 'EOF'
           source /home/ubuntu/airflow-venv/bin/activate
           airflow dags trigger train_and_deploy
         EOF
